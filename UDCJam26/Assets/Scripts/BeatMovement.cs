@@ -22,7 +22,6 @@ public class BeatMovement : MonoBehaviour
 /*
     [SerializeField] private float dist;            // Distance of target
     [SerializeField] private float time;            // Time to reach target
-    [SerializeField] private float accel;           // Incrementor to velocity
     [SerializeField] private float peak;            // Distance of target
         accel = 2 * (dist - vel * time) * Time.fixedDeltaTime / time / time / 2;
         peak = -vel * vel * Time.fixedDeltaTime / 4 / accel * 2;

@@ -1,12 +1,40 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class objectPool
+[Serializable]
+public class ObjectPool
 {
-    public GameObject targetObject;
-    public int targetAMount;
+    [SerializeField] private GameObject targetObject;
+    [SerializeField] private int targetAmount;
 
-    private List<GameObject> pooledObjects;
+    [SerializeField] private List<GameObject> pooledObjects;
+
+    public void Init()
+    {
+        pooledObjects = new List<GameObject>();
+        for (int i = 0; i < targetAmount; i++)
+        {
+            GameObject tmp = GameObject.Instantiate(targetObject);
+            tmp.SetActive(false);
+            pooledObjects.Add(tmp);
+        }
+    }
+    public GameObject GetObject()
+    {
+        // Return inactive object
+        foreach (GameObject obj in pooledObjects)
+        {
+            if (!obj.activeInHierarchy)
+                return obj;
+        }
+
+        // Spawn new object
+        GameObject tmp = GameObject.Instantiate(targetObject);
+        tmp.SetActive(false);
+        pooledObjects.Add(tmp);
+        return tmp;
+    }
 }
 
 public class GameController : MonoBehaviour
@@ -21,15 +49,20 @@ public class GameController : MonoBehaviour
     private float secondsPerBeat;
     private float timer = 0f;
 
-    [SerializeField] private objectPool objectPool_note_ON;
-    [SerializeField] private objectPool objectPool_note_OFF;
-    [SerializeField] private objectPool objectPool_bar;
+    [SerializeField] private ObjectPool objectPool_note_ON;
+    [SerializeField] private ObjectPool objectPool_note_OFF;
+    [SerializeField] private ObjectPool objectPool_bar;
 
     private void Start()
     {
         secondsPerBeat = bpm / 60f;
         secondsPerBeat = 1 / secondsPerBeat;
         activeBlocks = new List<GameObject>();
+
+        objectPool_note_ON.Init();
+        objectPool_note_OFF.Init();
+        objectPool_bar.Init();
+
         Spawn();
     }
 
