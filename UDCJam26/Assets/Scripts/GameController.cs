@@ -105,10 +105,10 @@ public class GameController : MonoBehaviour
 
     private void CheckCurrentBlock()
     {
-        currentBlock = activeBlocks[0];
-        if (currentBlock)
+        if (activeBlocks.Count > 0)
         {
-            if (currentBlock.GetComponent<CircleCollider2D>().IsTouching(target))
+			currentBlock = activeBlocks[0];
+			if (currentBlock.GetComponent<CircleCollider2D>().IsTouching(target))
             {
                 float dist = (currentBlock.transform.position - target.transform.position).magnitude;
             }
