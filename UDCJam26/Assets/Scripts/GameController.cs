@@ -66,14 +66,14 @@ public class GameController : MonoBehaviour
 
     /* Sequence */
     private int currentBeat = 0;
-	[SerializeField] private SequenceBuilder sequence;
+    [SerializeField] private SequenceBuilder sequence;
 
     /* Audio */
     [SerializeField] private AudioSource audioSource;        // Music source
 
     private void Start()
     {
-        targetDistance = (target.transform.position - spawnPoint.transform.position).magnitude;
+        targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
         objectAcceleration = Time.fixedDeltaTime * (targetDistance - objectVelocity * targetTime) / targetTime / targetTime;
         // TODO: Warn in editor if peak is within sreen bounds
         // TODO: Check this calculation
@@ -99,7 +99,7 @@ public class GameController : MonoBehaviour
     private void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
-		if (timer >= secondsPerBeat)
+        if (timer >= secondsPerBeat)
         {
             Spawn();
             timer -= secondsPerBeat;
@@ -132,29 +132,29 @@ public class GameController : MonoBehaviour
         obj.transform.position = spawnPoint.position;
 
         /* Spawn Notes */
-        
+
         RhythmBlockType type = RhythmBlockType.EMPTY;
-		if(sequence.beats.Length > currentBeat) {
-            type= sequence.beats[currentBeat];
+        if (sequence.beats.Length > currentBeat)
+        {
+            type = sequence.beats[currentBeat];
         }
 
-        switch(type) {
+        switch (type)
+        {
             case RhythmBlockType.HIT:
                 obj = objectPool_note_ON.GetObject();
-                obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration);
+                obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
                 obj.transform.position = spawnPoint.position;
-                activeBlocks.Add(obj);
                 break;
             case RhythmBlockType.NO_HIT:
-				obj = objectPool_note_OFF.GetObject();
-				obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration);
-				obj.transform.position = spawnPoint.position;
-				activeBlocks.Add(obj);
-				break;
-		}
+                obj = objectPool_note_OFF.GetObject();
+                obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
+                obj.transform.position = spawnPoint.position;
+                break;
+        }
 
-		currentBeat++;
-	}
+        currentBeat++;
+    }
 
     void OnTriggerEnter2D(Collider2D coll)
     {
