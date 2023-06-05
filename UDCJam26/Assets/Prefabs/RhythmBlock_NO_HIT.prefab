@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9189170028969877902}
   m_Layer: 0
   m_Name: RhythmBlock_NO_HIT
-  m_TagString: Untagged
+  m_TagString: Note_OFF
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
