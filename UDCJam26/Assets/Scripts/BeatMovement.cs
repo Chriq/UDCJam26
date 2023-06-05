@@ -7,6 +7,13 @@ public class BeatMovement : MonoBehaviour
     private float vel;             // Initial velocity
     private float accel;           // Fixed interval acceleration
 
+    public void SetParameters(float velocity, float acceleration, float despawnDelay)
+    {
+        vel = velocity;
+        accel = acceleration;
+        StartCoroutine(Despawn(despawnDelay));
+    }
+
     void FixedUpdate()
     {
         vel += accel;
@@ -14,11 +21,12 @@ public class BeatMovement : MonoBehaviour
         vel += accel;
     }
 
-    public void SetParameters(float velocity, float acceleration)
+    IEnumerator Despawn(float despawnDelay)
     {
-        vel = velocity;
-        accel = acceleration;
+        yield return new WaitForSeconds(despawnDelay);
+        this.gameObject.SetActive(false);
     }
+
 }
 
 /*
