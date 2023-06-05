@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        targetDistance = (target.transform.position - spawnPoint.transform.position).magnitude;
+        targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
         objectAcceleration = Time.fixedDeltaTime * (targetDistance - objectVelocity * targetTime) / targetTime / targetTime;
         // TODO: Warn in editor if peak is within sreen bounds
         // TODO: Check this calculation
