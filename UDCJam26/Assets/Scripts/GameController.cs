@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
 
     private float secondsPerBeat;
     private float timer = 0f;
+    private bool songStarted = false;
 
     /* Hit Detection */
     [SerializeField] private GameObject targetObj;
@@ -67,6 +68,9 @@ public class GameController : MonoBehaviour
     /* Sequence */
     private int currentBeat = 0;
     [SerializeField] private SequenceBuilder sequence;
+
+	/* UI */
+	[SerializeField] private PauseMenu pauseMenu;
 
     /* Audio */
     [SerializeField] private AudioSource audioSource;        // Music source
@@ -129,11 +133,13 @@ public class GameController : MonoBehaviour
 
         // Start
         Spawn();
+        timer = secondsPerBeat;
         Invoke("StartAudio", targetTime - 0.2f);
     }
 
     void StartAudio()
     {
+        songStarted = true;
         audioSource.Play();
     }
 
@@ -241,8 +247,15 @@ public class GameController : MonoBehaviour
         //Nothing
     }
 
-    public void AltClickEvent()
+    public void AltClickEvent(InputAction.CallbackContext context)
     {
-        // TODO: Pause
-    }
+		if(songStarted && context.performed) {
+			pauseMenu.TogglePause();
+            if(audioSource.isPlaying) {
+                audioSource.Pause();
+            } else {
+				audioSource.Play();
+			}
+		}
+	}
 }
