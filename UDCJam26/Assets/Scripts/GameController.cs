@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject targetObj;
 
     /* Spawn Settings */
-    [SerializeField] private float targetDistance;          // Target distance
+    private float targetDistance;                           // Target distance
     [SerializeField] private float targetTime;              // Time to reach target
     [SerializeField] private float objectVelocity;          // Spawned object speed
     private float objectAcceleration;                       // Spawned object acceleration
@@ -70,6 +70,14 @@ public class GameController : MonoBehaviour
 
     /* Audio */
     [SerializeField] private AudioSource audioSource;        // Music source
+
+    /* Score */
+    [SerializeField] private int gameScore;
+    [SerializeField] private int multiplier;
+    [SerializeField] private int seriescount;
+
+    /* Effects */
+    [SerializeField] private bool inverted;
 
     private void Start()
     {
@@ -113,6 +121,13 @@ public class GameController : MonoBehaviour
 
     public void Play()
     {
+        // Initialize
+        gameScore = 0;
+        multiplier = 1;
+        seriescount = 0;
+        inverted = false;
+
+        // Start
         Spawn();
         Invoke("StartAudio", targetTime - 0.2f);
     }
@@ -156,6 +171,43 @@ public class GameController : MonoBehaviour
         currentBeat++;
     }
 
+    void UpdateScore(string tag, bool hit)
+    {
+        if (
+             hit && ((!inverted && tag == "Note_ON") || (inverted && tag == "Note_OFF")) ||
+            !hit && ((inverted && tag == "Note_ON") || (!inverted && tag == "Note_OFF"))
+            )
+        {
+            if (seriescount < 0)
+            {
+                multiplier = 1;
+                seriescount = 0;
+            }
+            gameScore += multiplier;
+
+            if (++seriescount >= (multiplier << 1))
+                multiplier <<= 2;
+        }
+        else if (
+            !hit && ((!inverted && tag == "Note_ON") || (inverted && tag == "Note_OFF")) ||
+             hit && ((inverted && tag == "Note_ON") || (!inverted && tag == "Note_OFF"))
+            )
+        {
+            if (seriescount > 0)
+            {
+                multiplier = 1;
+                seriescount = 0;
+            }
+            gameScore -= multiplier;
+
+            if (--seriescount <= -(multiplier << 1))
+                multiplier <<= 2;
+        }
+        else
+        {
+            Debug.Log("Target object hit is not tagged!");
+        }
+    }
     void OnTriggerEnter2D(Collider2D coll)
     {
         targetObj = coll.gameObject;
@@ -166,8 +218,10 @@ public class GameController : MonoBehaviour
         {
             targetObj = null;
         }
-
-        // TODO: Note Miss
+        if (coll.gameObject.activeInHierarchy)
+        {
+            UpdateScore(coll.gameObject.tag, false);
+        }
     }
 
     public void MainClickEvent(InputAction.CallbackContext context)
@@ -176,6 +230,7 @@ public class GameController : MonoBehaviour
         {
             if (targetObj)
             {
+                UpdateScore(targetObj.tag, true);
                 targetObj.SetActive(false);
             }
         }

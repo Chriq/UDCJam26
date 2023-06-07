@@ -502,13 +502,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
+    - target: {fileID: 253026918447744569, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 253026918447744569, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 253026918447744569, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 253026918447744574, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
       propertyPath: sequence
       value: 
       objectReference: {fileID: 1443517806}
     - target: {fileID: 253026918447744574, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
+      propertyPath: objectDespawnDelay
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 253026918447744574, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
       propertyPath: objectPool_bar.targetAmount
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 253026918447744574, guid: 5d8aa14d9b99e6f46a040aac04897962, type: 3}
       propertyPath: objectPool_note_ON.targetAmount
