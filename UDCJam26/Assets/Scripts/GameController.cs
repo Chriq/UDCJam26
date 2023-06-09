@@ -92,6 +92,7 @@ public class GameController : MonoBehaviour
         UIManager.Instance.fade.FadeOut();
 
 		targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
+        //objectVelocity = objectVelocity * sequence.subdivisions / 4f;
         objectAcceleration = Time.fixedDeltaTime * (targetDistance - objectVelocity * targetTime) / targetTime / targetTime;
         // TODO: Warn in editor if peak is within sreen bounds
         // TODO: Check this calculation
@@ -117,10 +118,10 @@ public class GameController : MonoBehaviour
     private void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
-        if (timer >= secondsPerBeat)
+        if (timer >= (secondsPerBeat * 4f / sequence.subdivisions))
         {
             Spawn();
-            timer -= secondsPerBeat;
+            timer -= (secondsPerBeat * 4 / sequence.subdivisions);
         }
     }
 
@@ -133,7 +134,7 @@ public class GameController : MonoBehaviour
         inverted = false;
 
         // Start
-        timer = secondsPerBeat;
+        timer = (secondsPerBeat * 4f / sequence.subdivisions);
         Invoke("StartAudio", targetTime - 0.2f);
     }
 
