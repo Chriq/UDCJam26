@@ -15,9 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2fcdafb85e17db0498a10b4036ed7030
   - enabled: 1
+    path: Assets/Scenes/SongSelection.unity
+    guid: 07797ba3e19bcbf42b477508b4df4113
+  - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: c98e9c466c21e7d4fae418b5f4d87d7f
   - enabled: 1
-    path: Assets/Scenes/SongSelection.unity
-    guid: 07797ba3e19bcbf42b477508b4df4113
+    path: Assets/Scenes/Beach.unity
+    guid: d22ed6e793b800c49bf7eb00ae69f90e
   m_configObjects: {}
