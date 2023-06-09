@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class ObjectPool
@@ -71,9 +73,10 @@ public class GameController : MonoBehaviour
 
 	/* UI */
 	[SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private CanvasGroup fadeCanvas;
 
-    /* Audio */
-    [SerializeField] private AudioSource audioSource;        // Music source
+	/* Audio */
+	[SerializeField] private AudioSource audioSource;        // Music source
 
     /* Score */
     [SerializeField] private int gameScore;
@@ -85,7 +88,10 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
+		UIManager.Instance.fade.canvas = fadeCanvas;
+        UIManager.Instance.fade.FadeOut();
+
+		targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
         objectAcceleration = Time.fixedDeltaTime * (targetDistance - objectVelocity * targetTime) / targetTime / targetTime;
         // TODO: Warn in editor if peak is within sreen bounds
         // TODO: Check this calculation
@@ -116,11 +122,6 @@ public class GameController : MonoBehaviour
             Spawn();
             timer -= secondsPerBeat;
         }
-
-        // TODO: Read Button Press
-        // if (trigger)
-        //     if (button)
-        //         activate note
     }
 
     public void Play()
@@ -132,7 +133,6 @@ public class GameController : MonoBehaviour
         inverted = false;
 
         // Start
-        Spawn();
         timer = secondsPerBeat;
         Invoke("StartAudio", targetTime - 0.2f);
     }
@@ -145,37 +145,37 @@ public class GameController : MonoBehaviour
 
     public void Spawn()
     {
-        GameObject obj;
+        if (sequence.beats.Length > currentBeat) {
+            GameObject obj;
 
-        /* Spawn Visual Elements */
-        obj = objectPool_bar.GetObject();
-        obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
-        obj.transform.position = spawnPoint.position;
+            /* Spawn Visual Elements */
+            obj = objectPool_bar.GetObject();
+            obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
+            obj.transform.position = spawnPoint.position;
 
-        /* Spawn Notes */
+            /* Spawn Notes */
 
-        RhythmBlockType type = RhythmBlockType.EMPTY;
-        if (sequence.beats.Length > currentBeat)
-        {
-            type = sequence.beats[currentBeat];
-        }
+            RhythmBlockType type = sequence.beats[currentBeat];        
 
-        switch (type)
-        {
-            case RhythmBlockType.HIT:
-                obj = objectPool_note_ON.GetObject();
-                obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
-                obj.transform.position = spawnPoint.position;
-                break;
-            case RhythmBlockType.NO_HIT:
-                obj = objectPool_note_OFF.GetObject();
-                obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
-                obj.transform.position = spawnPoint.position;
-                break;
-        }
+            switch (type) {
+                case RhythmBlockType.HIT:
+                    obj = objectPool_note_ON.GetObject();
+                    obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
+                    obj.transform.position = spawnPoint.position;
+                    break;
+                case RhythmBlockType.NO_HIT:
+                    obj = objectPool_note_OFF.GetObject();
+                    obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
+                    obj.transform.position = spawnPoint.position;
+                    break;
+            }
 
-        currentBeat++;
-    }
+            currentBeat++;
+		} else if(sequence.beats.Length == currentBeat) {
+            StartCoroutine(EndLevel());
+			currentBeat++;
+		}
+	}
 
     void UpdateScore(string tag, bool hit)
     {
@@ -214,7 +214,18 @@ public class GameController : MonoBehaviour
             Debug.Log("Target object hit is not tagged!");
         }
     }
-    void OnTriggerEnter2D(Collider2D coll)
+
+    private IEnumerator EndLevel() {
+        yield return new WaitForSeconds(5f);
+        UIManager.Instance.fade.canvas = fadeCanvas;
+        UIManager.Instance.fade.FadeInWithCallback(delegate {
+            SceneManager.LoadScene("SongSelection");
+        });
+
+        // TODO: save score
+    }
+
+	void OnTriggerEnter2D(Collider2D coll)
     {
         targetObj = coll.gameObject;
     }

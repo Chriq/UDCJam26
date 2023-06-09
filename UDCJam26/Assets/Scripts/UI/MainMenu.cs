@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour {
 
 	public CanvasGroup mainCanvas;
 
-	private void Awake() {
+	private void Start() {
 		UIManager.Instance.fade.canvas = currentCanvas;
 		UIManager.Instance.fade.FadeInWithCallback(delegate {
 			StartCoroutine(FadeToMenu(2f));
@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour {
 	public void StartGame() {
 		UIManager.Instance.fade.canvas = currentCanvas;
 		UIManager.Instance.fade.FadeOutWithCallback(delegate {
-			SceneManager.LoadScene("SampleScene");
+			SceneManager.LoadScene("SongSelection");
 		});
 	}
 
