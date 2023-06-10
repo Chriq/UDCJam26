@@ -45,8 +45,8 @@ public class ObjectPool
 
 public class GameController : MonoBehaviour
 {
-    public static float bpm = 120f;
-    public Transform spawnPoint;
+    public float bpm = 120f;
+    [SerializeField] private float EDITOR_TIME_SCALE;
 
     private float secondsPerBeat;
     private float timer = 0f;
@@ -56,11 +56,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject targetObj;
 
     /* Spawn Settings */
-    private float targetDistance;                           // Target distance
+    [SerializeField] private Transform spawnPoint;          // Spawn Location
     [SerializeField] private float targetTime;              // Time to reach target
     [SerializeField] private float objectVelocity;          // Spawned object speed
-    private float objectAcceleration;                       // Spawned object acceleration
     [SerializeField] private float objectDespawnDelay;      // Spawned object despawn delay
+    private float targetDistance;                           // Distance to target
+    private float objectAcceleration;                       // Spawned object acceleration
 
     /* Object Pools */
     [SerializeField] private ObjectPool objectPool_note_ON;
@@ -71,12 +72,13 @@ public class GameController : MonoBehaviour
     private int currentBeat = 0;
     [SerializeField] private SequenceBuilder sequence;
 
-	/* UI */
-	[SerializeField] private PauseMenu pauseMenu;
+    /* UI */
+    [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private CanvasGroup fadeCanvas;
 
-	/* Audio */
-	[SerializeField] private AudioSource audioSource;        // Music source
+    /* Audio */
+    [SerializeField] private AudioSource audioSource;       // Music source
+    [SerializeField] private float audioDelay;              // Music Start Delay
 
     /* Score */
     [SerializeField] private int gameScore;
@@ -88,10 +90,11 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-		UIManager.Instance.fade.canvas = fadeCanvas;
+        Time.timeScale = EDITOR_TIME_SCALE;
+        UIManager.Instance.fade.canvas = fadeCanvas;
         UIManager.Instance.fade.FadeOut();
 
-		targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
+        targetDistance = (transform.position - spawnPoint.transform.position).magnitude;
         objectAcceleration = Time.fixedDeltaTime * (targetDistance - objectVelocity * targetTime) / targetTime / targetTime;
         // TODO: Warn in editor if peak is within sreen bounds
         // TODO: Check this calculation
@@ -134,7 +137,7 @@ public class GameController : MonoBehaviour
 
         // Start
         timer = secondsPerBeat;
-        Invoke("StartAudio", targetTime - 0.2f);
+        Invoke("StartAudio", targetTime - audioDelay);
     }
 
     void StartAudio()
@@ -145,7 +148,8 @@ public class GameController : MonoBehaviour
 
     public void Spawn()
     {
-        if (sequence.beats.Length > currentBeat) {
+        if (sequence.beats.Length > currentBeat)
+        {
             GameObject obj;
 
             /* Spawn Visual Elements */
@@ -155,9 +159,10 @@ public class GameController : MonoBehaviour
 
             /* Spawn Notes */
 
-            RhythmBlockType type = sequence.beats[currentBeat];        
+            RhythmBlockType type = sequence.beats[currentBeat];
 
-            switch (type) {
+            switch (type)
+            {
                 case RhythmBlockType.HIT:
                     obj = objectPool_note_ON.GetObject();
                     obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
@@ -171,11 +176,13 @@ public class GameController : MonoBehaviour
             }
 
             currentBeat++;
-		} else if(sequence.beats.Length == currentBeat) {
+        }
+        else if (sequence.beats.Length == currentBeat)
+        {
             StartCoroutine(EndLevel());
-			currentBeat++;
-		}
-	}
+            currentBeat++;
+        }
+    }
 
     void UpdateScore(string tag, bool hit)
     {
@@ -215,17 +222,19 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private IEnumerator EndLevel() {
+    private IEnumerator EndLevel()
+    {
         yield return new WaitForSeconds(5f);
         UIManager.Instance.fade.canvas = fadeCanvas;
-        UIManager.Instance.fade.FadeInWithCallback(delegate {
+        UIManager.Instance.fade.FadeInWithCallback(delegate
+        {
             SceneManager.LoadScene("SongSelection");
         });
 
         // TODO: save score
     }
 
-	void OnTriggerEnter2D(Collider2D coll)
+    void OnTriggerEnter2D(Collider2D coll)
     {
         targetObj = coll.gameObject;
     }
@@ -260,13 +269,17 @@ public class GameController : MonoBehaviour
 
     public void AltClickEvent(InputAction.CallbackContext context)
     {
-		if(songStarted && context.performed) {
-			pauseMenu.TogglePause();
-            if(audioSource.isPlaying) {
+        if (songStarted && context.performed)
+        {
+            pauseMenu.TogglePause();
+            if (audioSource.isPlaying)
+            {
                 audioSource.Pause();
-            } else {
-				audioSource.Play();
-			}
-		}
-	}
+            }
+            else
+            {
+                audioSource.Play();
+            }
+        }
+    }
 }
