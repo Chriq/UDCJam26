@@ -64,7 +64,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private float targetTime;              // Time to reach target
     [SerializeField] private float objectVelocity;          // Spawned object speed
     [SerializeField] private float objectDespawnDelay;      // Spawned object despawn delay
-    private float targetDistance;                           // Distance to target
     private float objectAcceleration;                       // Spawned object acceleration
 
     /* Object Pools */
