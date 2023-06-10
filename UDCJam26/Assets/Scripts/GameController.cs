@@ -54,9 +54,12 @@ public class GameController : MonoBehaviour
 
     /* Hit Detection */
     [SerializeField] private GameObject targetObj;
+	[SerializeField] private Color targetColor = Color.green;
+	[SerializeField] private Color hitColor = Color.white;
+	[SerializeField] private Color noHitColor = Color.white;
 
-    /* Spawn Settings */
-    private float targetDistance;                           // Target distance
+	/* Spawn Settings */
+	private float targetDistance;                           // Target distance
     [SerializeField] private float targetTime;              // Time to reach target
     [SerializeField] private float objectVelocity;          // Spawned object speed
     private float objectAcceleration;                       // Spawned object acceleration
@@ -77,9 +80,10 @@ public class GameController : MonoBehaviour
 
 	/* Audio */
 	[SerializeField] private AudioSource audioSource;        // Music source
+	[SerializeField] private AudioSource pop;
 
-    /* Score */
-    [SerializeField] private int gameScore;
+	/* Score */
+	[SerializeField] private int gameScore;
     [SerializeField] private int multiplier;
     [SerializeField] private int seriescount;
 
@@ -112,6 +116,9 @@ public class GameController : MonoBehaviour
                 Debug.LogError("Audio Source component not found in GameController!!");
             }
         }
+
+        targetObj.GetComponent<SpriteRenderer>().color = targetColor;
+
         Play();
     }
 
@@ -163,12 +170,14 @@ public class GameController : MonoBehaviour
                     obj = objectPool_note_ON.GetObject();
                     obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
                     obj.transform.position = spawnPoint.position;
+                    obj.GetComponent<SpriteRenderer>().color = hitColor;
                     break;
                 case RhythmBlockType.NO_HIT:
                     obj = objectPool_note_OFF.GetObject();
                     obj.GetComponent<BeatMovement>().SetParameters(objectVelocity, objectAcceleration, objectDespawnDelay);
                     obj.transform.position = spawnPoint.position;
-                    break;
+					obj.GetComponent<SpriteRenderer>().color = noHitColor;
+					break;
             }
 
             currentBeat++;
@@ -246,9 +255,10 @@ public class GameController : MonoBehaviour
     {
         if (context.performed)
         {
-            if (targetObj)
+            if (targetObj && !targetObj.CompareTag("Untagged"))
             {
-                UpdateScore(targetObj.tag, true);
+				pop.Play();
+				UpdateScore(targetObj.tag, true);
                 targetObj.SetActive(false);
             }
         }

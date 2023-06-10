@@ -1850,6 +1850,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 253026917596617007}
   targetObj: {fileID: 253026918625559973}
+  targetColor: {r: 0.12130651, g: 0.5471698, b: 0.12130651, a: 1}
+  hitColor: {r: 0.07075471, g: 0.15600689, b: 1, a: 1}
+  noHitColor: {r: 0.6792453, g: 0.12495552, b: 0.12495552, a: 1}
   targetTime: 4
   objectVelocity: 3
   objectDespawnDelay: 8
