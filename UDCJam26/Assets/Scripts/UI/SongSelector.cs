@@ -20,11 +20,13 @@ public class SongSelector : MonoBehaviour
     {
         foreach (HighScoreElement e in elementsHighScore)
         {
-            e.textUI.text = $"High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0).ToString("N2")}";
             if (PlayerPrefs.GetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0) == 1)
             {
-                e.textUI.fontStyle = FontStyles.Bold;
-                PlayerPrefs.SetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0);
+                e.textUI.text = $"*** High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0).ToString("N2")}";
+            }
+            else
+            {
+                e.textUI.text = $"High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0).ToString("N2")}";
             }
         }
     }
@@ -35,7 +37,7 @@ public class SongSelector : MonoBehaviour
         UIManager.Instance.fade.FadeInWithCallback(delegate
         {
             SceneManager.LoadScene(sceneName);
-        }, 3f);
+        }, 1f);
     }
 
     public void ToMainMenu()
