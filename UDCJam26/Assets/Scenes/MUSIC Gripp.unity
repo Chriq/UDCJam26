@@ -11366,7 +11366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 139.9
+  bpm: 140
   EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 623751777}
   targetColor: {r: 1, g: 0.2216981, b: 0.40623322, a: 1}
