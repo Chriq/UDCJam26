@@ -5,12 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/JackScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 46a38c2efcb3a6646930eca082dd15e2
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 2fcdafb85e17db0498a10b4036ed7030
@@ -24,9 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Beach.unity
     guid: d22ed6e793b800c49bf7eb00ae69f90e
   - enabled: 1
-    path: Assets/Scenes/MUSIC Gripp.unity
-    guid: dd5c8d75db37b3640b806173decaf762
-  - enabled: 1
     path: Assets/Scenes/MUSIC Lullaby No 0.unity
     guid: 014e0dfc9d370174f95b7ae442187da7
+  - enabled: 1
+    path: Assets/Scenes/MUSIC Gripp.unity
+    guid: dd5c8d75db37b3640b806173decaf762
   m_configObjects: {}
