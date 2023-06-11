@@ -213,7 +213,7 @@ public class GameController : MonoBehaviour
             gameScore += (distScore - dist) * multiplier;
 
             if (++seriescount >= (multiplier << 1))
-                multiplier <<= 2;
+                multiplier <<= 1;
         }
         else if (
             !hit && ((!inverted && tag == "Note_ON") || (inverted && tag == "Note_OFF")) ||
@@ -228,7 +228,7 @@ public class GameController : MonoBehaviour
             gameScore -= multiplier;
 
             if (--seriescount <= -(multiplier << 1))
-                multiplier <<= 2;
+                multiplier <<= 1;
         }
         else
         {

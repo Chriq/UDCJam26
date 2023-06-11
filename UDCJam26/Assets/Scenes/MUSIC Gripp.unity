@@ -1426,9 +1426,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SongName: 
   bpm: 280
   EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 1332700902}
+  targetColor: {r: 0, g: 1, b: 0, a: 1}
+  hitColor: {r: 1, g: 1, b: 1, a: 1}
+  noHitColor: {r: 1, g: 1, b: 1, a: 1}
   spawnPoint: {fileID: 164887148}
   targetTime: 4
   objectVelocity: -1
@@ -1447,11 +1451,12 @@ MonoBehaviour:
     pooledObjects: []
   sequence: {fileID: 1443517806}
   pauseMenu: {fileID: 1351353937}
+  fadeCanvas: {fileID: 0}
   audioSource: {fileID: 1964050250}
+  pop: {fileID: 0}
   audioDelay: 0
   gameScore: 0
-  multiplier: 0
-  seriescount: 0
+  distScore: 1
   inverted: 0
 --- !u!4 &1964050253
 Transform:

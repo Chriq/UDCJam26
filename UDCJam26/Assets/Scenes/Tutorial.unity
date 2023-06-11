@@ -2006,6 +2006,5 @@ MonoBehaviour:
   pop: {fileID: 1247319141}
   audioDelay: 0
   gameScore: 0
-  multiplier: 0
-  seriescount: 0
+  distScore: 1
   inverted: 0

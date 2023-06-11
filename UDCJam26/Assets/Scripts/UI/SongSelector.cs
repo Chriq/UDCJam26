@@ -20,7 +20,7 @@ public class SongSelector : MonoBehaviour
     {
         foreach (HighScoreElement e in elementsHighScore)
         {
-            e.textUI.text = $"High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0)}";
+            e.textUI.text = $"High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0).ToString("N2")}";
             if (PlayerPrefs.GetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0) == 1)
             {
                 e.textUI.fontStyle = FontStyles.Bold;
