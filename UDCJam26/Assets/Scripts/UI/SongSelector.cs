@@ -23,6 +23,7 @@ public class SongSelector : MonoBehaviour
             if (PlayerPrefs.GetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0) == 1)
             {
                 e.textUI.text = $"*** High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0).ToString("N2")}";
+                PlayerPrefs.SetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0);
             }
             else
             {
