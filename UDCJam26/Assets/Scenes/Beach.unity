@@ -12047,7 +12047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SongName: 
   bpm: 120
   EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 253026918625559973}
@@ -12079,6 +12078,6 @@ MonoBehaviour:
   gameScore: 0
   distScore: 1
   scoreUI: {fileID: 1546454659}
-  numInversions: 5
-  invertedBackground: {r: 0, g: 0, b: 0, a: 0}
+  numInversions: 4
+  invertedBackground: {r: 0.05514209, g: 0.0489498, b: 0.18867922, a: 1}
   inverted: 0

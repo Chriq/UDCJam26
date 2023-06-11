@@ -718,7 +718,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1411f00b9d3ebb949b94c502377a2aab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a9190aed85c1a64ea94036c6d42a092, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12047,7 +12047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SongName: 
   bpm: 120
   EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 253026918625559973}

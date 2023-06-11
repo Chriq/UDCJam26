@@ -263,7 +263,8 @@ public class GameController : MonoBehaviour
             for(int i = 0; i < numInversions;) {
 	            int rand = UnityEngine.Random.Range(1, sequence.numBars / 4);
 	            int barStart = rand * 4 * sequence.subdivisions;
-                if(!ContainsBetween(barStart, barStart + 4 * sequence.subdivisions, inversionBars)) {
+                if(!ContainsBetween(barStart, barStart + 4 * sequence.subdivisions, inversionBars) &&
+				   !ContainsBetween(barStart - 4 * sequence.subdivisions, barStart, inversionBars)) {
                     inversionBars.Add(barStart);
                     i++;
                 }            
