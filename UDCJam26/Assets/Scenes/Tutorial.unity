@@ -675,6 +675,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: -20
+  rotateRamp: 0
+  rotateRampSpeed: 0
 --- !u!212 &776487094
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -738,7 +740,7 @@ GameObject:
   - component: {fileID: 950004856}
   - component: {fileID: 950004859}
   - component: {fileID: 950004858}
-  - component: {fileID: 950004857}
+  - component: {fileID: 950004860}
   m_Layer: 0
   m_Name: Particle System 2
   m_TagString: Untagged
@@ -761,19 +763,6 @@ Transform:
   m_Father: {fileID: 152303022}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &950004857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950004855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d37abe9f2014d24a9ac7203ceac74ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MODE: 0
 --- !u!199 &950004858
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -1036,7 +1025,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.32894266, g: 0.7656318, b: 0.9056604, a: 1}
+      maxColor: {r: 0.6698113, g: 0.23696156, b: 0.59584105, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5553,6 +5542,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &950004860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950004855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcecf284432ca8d4d95cd894c76ca43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MODE: 0
 --- !u!1 &1064247402
 GameObject:
   m_ObjectHideFlags: 0
@@ -5665,7 +5667,7 @@ GameObject:
   - component: {fileID: 1105251105}
   - component: {fileID: 1105251108}
   - component: {fileID: 1105251107}
-  - component: {fileID: 1105251106}
+  - component: {fileID: 1105251109}
   m_Layer: 0
   m_Name: Particle System 1
   m_TagString: Untagged
@@ -5688,19 +5690,6 @@ Transform:
   m_Father: {fileID: 152303022}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1105251106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105251104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d37abe9f2014d24a9ac7203ceac74ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MODE: 0
 --- !u!199 &1105251107
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5963,7 +5952,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.32894266, g: 0.7656318, b: 0.9056604, a: 1}
+      maxColor: {r: 0.8962264, g: 0.56225526, b: 0.8674108, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10480,6 +10469,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1105251109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105251104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcecf284432ca8d4d95cd894c76ca43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MODE: 0
 --- !u!1 &1247319140
 GameObject:
   m_ObjectHideFlags: 0
@@ -11060,6 +11062,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 30
+  rotateRamp: 0
+  rotateRampSpeed: 0
 --- !u!212 &1790829851
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12043,6 +12047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SongName: 
   bpm: 120
   EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 253026918625559973}
@@ -12073,8 +12078,6 @@ MonoBehaviour:
   audioDelay: 0
   gameScore: 0
   distScore: 1
-  multiplier: 0
-  seriescount: 0
   scoreUI: {fileID: 756764521}
   numInversions: 1
   invertedBackground: {r: 0, g: 0, b: 0, a: 0}

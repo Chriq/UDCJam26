@@ -251,7 +251,7 @@ public class GameController : MonoBehaviour
             Debug.Log("Target object hit is not tagged!");
         }
 
-        scoreUI.text = $"SCORE: {gameScore}";
+        scoreUI.text = $"SCORE: {gameScore.ToString("F2")}";
     }
 
     void PickBarsForInversion() {

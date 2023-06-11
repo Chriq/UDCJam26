@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour {
 			fade.canvas = next;
 			fade.FadeInWithCallback(delegate {
 				current = next;
+				current.interactable = true;
+				current.blocksRaycasts = true;
 			}, duration);
 		}, duration);
 	}
