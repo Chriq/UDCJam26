@@ -1,19 +1,49 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class SongSelector : MonoBehaviour {
-	[SerializeField] private CanvasGroup fadeCanvas;
-	public void StartSong(string sceneName) {
-		UIManager.Instance.fade.canvas = fadeCanvas;
-		UIManager.Instance.fade.FadeInWithCallback(delegate {
-			SceneManager.LoadScene(sceneName);
-		}, 3f);
-	}
+[System.Serializable]
+public class HighScoreElement
+{
+    public TextMeshProUGUI textUI;
+    public string sceneName;
+}
 
-	public void ToMainMenu() {
-		UIManager.Instance.fade.canvas = fadeCanvas;
-		UIManager.Instance.fade.FadeInWithCallback(delegate {
-			SceneManager.LoadScene("MainMenu");
-		}, 3f);
-	}
+public class SongSelector : MonoBehaviour
+{
+    [SerializeField] private CanvasGroup fadeCanvas;
+
+    [SerializeField] HighScoreElement[] elementsHighScore;
+
+    void Start()
+    {
+        foreach (HighScoreElement e in elementsHighScore)
+        {
+            e.textUI.text = $"High Score: {PlayerPrefs.GetFloat($"HIGH_SCORE_{e.sceneName}", 0).ToString("N2")}";
+            if (PlayerPrefs.GetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0) == 1)
+            {
+                e.textUI.fontStyle = FontStyles.Bold;
+                PlayerPrefs.SetInt($"HIGH_SCORE_{e.sceneName}_UPDATED", 0);
+            }
+        }
+    }
+
+    public void StartSong(string sceneName)
+    {
+        UIManager.Instance.fade.canvas = fadeCanvas;
+        UIManager.Instance.fade.FadeInWithCallback(delegate
+        {
+            SceneManager.LoadScene(sceneName);
+        }, 3f);
+    }
+
+    public void ToMainMenu()
+    {
+        UIManager.Instance.fade.canvas = fadeCanvas;
+        UIManager.Instance.fade.FadeInWithCallback(delegate
+        {
+            SceneManager.LoadScene("MainMenu");
+        }, 3f);
+    }
 }
