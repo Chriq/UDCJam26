@@ -12079,6 +12079,6 @@ MonoBehaviour:
   gameScore: 0
   distScore: 1
   scoreUI: {fileID: 1546454659}
-  numInversions: 2
+  numInversions: 5
   invertedBackground: {r: 0, g: 0, b: 0, a: 0}
   inverted: 0

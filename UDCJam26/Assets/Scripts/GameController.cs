@@ -259,19 +259,14 @@ public class GameController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Tutorial")
         {
             inversionBars.Add(16);
-        }
-        else
-        {
-            for (int i = 0; i < numInversions;)
-            {
-                int rand = UnityEngine.Random.Range(1, sequence.numBars / 4);
-                int barStart = rand * 4 * sequence.subdivisions;
-                if (!inversionBars.Contains(barStart) && !inversionBars.Contains(barStart + 4 * sequence.subdivisions))
-                {
+        } else {
+            for(int i = 0; i < numInversions;) {
+	            int rand = UnityEngine.Random.Range(1, sequence.numBars / 4);
+	            int barStart = rand * 4 * sequence.subdivisions;
+                if(!ContainsBetween(barStart, barStart + 4 * sequence.subdivisions, inversionBars)) {
                     inversionBars.Add(barStart);
                     i++;
-                }
-
+                }            
             }
         }
 
@@ -279,8 +274,17 @@ public class GameController : MonoBehaviour
         currentInversion = inversionBars[0];
     }
 
-    private IEnumerator CheckForInversion(int beat)
-    {
+    bool ContainsBetween(int start, int end, List<int> list) {
+        for(int i = start; i <= end; i++) {
+            if(list.Contains(i)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+	private IEnumerator CheckForInversion(int beat) {
         yield return new WaitForSeconds(targetTime - audioDelay);
 
         int NUM_BARS = 4;
@@ -290,13 +294,13 @@ public class GameController : MonoBehaviour
         {
             inverted = !inverted;
             currentInversion = beat;
-        }
-        else if (beat == currentInversion + NUM_BARS * BEATS_PER_BAR)
-        {
-            inverted = !inverted;
-        }
-        else if (beat == currentInversion - (2 * BEATS_PER_BAR / 4))
-        {
+		} else if(beat == currentInversion + NUM_BARS * BEATS_PER_BAR) {
+			inverted = !inverted;
+            int index = inversionBars.FindIndex((i) => { return i == currentInversion; }) + 1;
+		    if(index < inversionBars.Count) {
+                currentInversion = inversionBars[index];
+            }
+        } else if(beat == currentInversion - (2 * BEATS_PER_BAR / 4)) {
             StartCoroutine(BackgroundCoroutine(originalBackground, invertedBackground, secondsPerBeat * 2f));
         }
         else if (beat == currentInversion + NUM_BARS * BEATS_PER_BAR - (2 * BEATS_PER_BAR / 4))
