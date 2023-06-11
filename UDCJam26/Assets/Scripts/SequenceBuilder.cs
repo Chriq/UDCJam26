@@ -28,6 +28,7 @@ public class SequenceBuilder : MonoBehaviour {
 		}
 
 		numBars = beats.Length / subdivisions;
+		EditorUtility.SetDirty(this);
 	}
 }
 

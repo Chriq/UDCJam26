@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -90,9 +91,18 @@ public class GameController : MonoBehaviour
     [SerializeField] private float distScore;
     private int multiplier;
     private int seriescount;
+	[SerializeField] private TextMeshProUGUI scoreUI;
 
-    /* Effects */
-    [SerializeField] private bool inverted;
+	/* Inversion */
+	[SerializeField] private int numInversions;
+	List<int> inversionBars = new List<int>();
+    [SerializeField] private Color invertedBackground;
+    private Color originalBackground;
+    private int currentInversion = int.MinValue;
+
+
+	/* Effects */
+	[SerializeField] private bool inverted;
 
     private void Start()
     {
@@ -125,6 +135,10 @@ public class GameController : MonoBehaviour
         {
             sr.color = targetColor;
         }
+
+        originalBackground = Camera.main.backgroundColor;
+        PickBarsForInversion();
+
 
         Play();
     }
@@ -160,7 +174,9 @@ public class GameController : MonoBehaviour
 
     public void Spawn()
     {
-        if (sequence.beats.Length > currentBeat)
+		StartCoroutine(CheckForInversion(currentBeat));
+
+		if (sequence.beats.Length > currentBeat)
         {
             GameObject obj;
 
@@ -234,7 +250,57 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Target object hit is not tagged!");
         }
+
+        scoreUI.text = $"SCORE: {gameScore}";
     }
+
+    void PickBarsForInversion() {
+
+        if(SceneManager.GetActiveScene().name == "Tutorial") {
+            inversionBars.Add(16);
+        } else {
+            for(int i = 0; i < numInversions;) {
+	            int rand = UnityEngine.Random.Range(1, sequence.numBars / 4);
+	            int barStart = rand * 4 * sequence.subdivisions;
+                if(!inversionBars.Contains(barStart) && !inversionBars.Contains(barStart + 4 * sequence.subdivisions)) {
+                    inversionBars.Add(barStart);
+                    i++;
+                }
+            
+            }
+        }
+
+        inversionBars.Sort();
+		currentInversion = inversionBars[0];
+	}
+
+	private IEnumerator CheckForInversion(int beat) {
+        yield return new WaitForSeconds(targetTime - audioDelay);
+
+        int NUM_BARS = 4;
+        int BEATS_PER_BAR = sequence.subdivisions;
+
+        if(inversionBars.Contains(beat)) {
+			inverted = !inverted;
+            currentInversion = beat;
+		} else if(beat == currentInversion + NUM_BARS * BEATS_PER_BAR) {
+			inverted = !inverted;
+		} else if(beat == currentInversion - (2 * BEATS_PER_BAR / 4)) {
+            StartCoroutine(BackgroundCoroutine(originalBackground, invertedBackground, secondsPerBeat * 2f));
+		} else if(beat == currentInversion + NUM_BARS * BEATS_PER_BAR - (2 * BEATS_PER_BAR / 4)) {
+			StartCoroutine(BackgroundCoroutine(invertedBackground, originalBackground, secondsPerBeat * 2f));
+		}
+	}
+
+	private IEnumerator BackgroundCoroutine(Color start, Color end, float duration) {
+		float counter = 0;
+
+		while(counter < duration) {
+			counter += Time.deltaTime;
+			Camera.main.backgroundColor = Color.Lerp(start, end, counter / duration);
+			yield return null;
+		}
+	}
 
     private IEnumerator EndLevel()
     {
@@ -255,9 +321,9 @@ public class GameController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D coll)
     {
         targetObj = coll.gameObject;
-    }
+     }
     void OnTriggerExit2D(Collider2D coll)
-    {
+     {
         if (coll.gameObject == targetObj)
         {
             targetObj = null;
