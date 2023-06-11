@@ -45,8 +45,9 @@ public class ObjectPool
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private string SongName;
     public float bpm = 120f;
-    [SerializeField] private float EDITOR_TIME_SCALE;
+    [SerializeField] private float EDITOR_TIME_SCALE = 1;
 
     private float secondsPerBeat;
     private float timer = 0f;
@@ -59,11 +60,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private Color noHitColor = Color.white;
 
     /* Spawn Settings */
-    private float targetDistance;                           // Target distance
     [SerializeField] private Transform spawnPoint;          // Spawn Location
     [SerializeField] private float targetTime;              // Time to reach target
     [SerializeField] private float objectVelocity;          // Spawned object speed
     [SerializeField] private float objectDespawnDelay;      // Spawned object despawn delay
+    private float targetDistance;                           // Target distance
     private float objectAcceleration;                       // Spawned object acceleration
 
     /* Object Pools */
@@ -85,9 +86,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private float audioDelay;              // Music Start Delay
 
     /* Score */
-    [SerializeField] private int gameScore;
-    [SerializeField] private int multiplier;
-    [SerializeField] private int seriescount;
+    [SerializeField] private float gameScore;
+    [SerializeField] private float distScore;
+    private int multiplier;
+    private int seriescount;
 
     /* Effects */
     [SerializeField] private bool inverted;
@@ -196,7 +198,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void UpdateScore(string tag, bool hit)
+    void UpdateScore(string tag, float dist, bool hit)
     {
         if (
              hit && ((!inverted && tag == "Note_ON") || (inverted && tag == "Note_OFF")) ||
@@ -208,7 +210,7 @@ public class GameController : MonoBehaviour
                 multiplier = 1;
                 seriescount = 0;
             }
-            gameScore += multiplier;
+            gameScore += (distScore - dist) * multiplier;
 
             if (++seriescount >= (multiplier << 1))
                 multiplier <<= 2;
@@ -243,7 +245,11 @@ public class GameController : MonoBehaviour
             SceneManager.LoadScene("SongSelection");
         });
 
-        // TODO: save score
+        if (gameScore > PlayerPrefs.GetFloat("HIGH_SCORE_" + SceneManager.GetActiveScene().name, 0))
+        {
+            PlayerPrefs.SetFloat("HIGH_SCORE_" + SceneManager.GetActiveScene().name, gameScore);
+            PlayerPrefs.SetInt("HIGH_SCORE_" + SceneManager.GetActiveScene().name + "_UPDATED", 1);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -258,7 +264,7 @@ public class GameController : MonoBehaviour
         }
         if (coll.gameObject.activeInHierarchy)
         {
-            UpdateScore(coll.gameObject.tag, false);
+            UpdateScore(coll.gameObject.tag, 0, false);
         }
     }
 
@@ -269,7 +275,7 @@ public class GameController : MonoBehaviour
             if (targetObj && !targetObj.CompareTag("Untagged"))
             {
                 pop.Play();
-                UpdateScore(targetObj.tag, true);
+                UpdateScore(targetObj.tag, Vector2.Distance(targetObj.transform.position, transform.position), true);
                 targetObj.SetActive(false);
             }
         }

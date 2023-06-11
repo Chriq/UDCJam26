@@ -1976,11 +1976,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 253026917596617007}
+  SongName: 
+  bpm: 120
+  EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 253026918625559973}
   targetColor: {r: 0, g: 1, b: 0.007030964, a: 1}
   hitColor: {r: 0.0990566, g: 0.7945998, b: 1, a: 1}
   noHitColor: {r: 0.8117647, g: 0.15142809, b: 0.10980393, a: 1}
+  spawnPoint: {fileID: 253026917596617007}
   targetTime: 4
   objectVelocity: 3
   objectDespawnDelay: 8
@@ -2001,6 +2004,7 @@ MonoBehaviour:
   fadeCanvas: {fileID: 2016383087}
   audioSource: {fileID: 253026918993470473}
   pop: {fileID: 1247319141}
+  audioDelay: 0
   gameScore: 0
   multiplier: 0
   seriescount: 0

@@ -6594,6 +6594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602abfea118bcbe4a900e4b3dc7ac7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SongName: 
   bpm: 120
   EDITOR_TIME_SCALE: 1
   targetObj: {fileID: 1332700902}
@@ -6623,8 +6624,7 @@ MonoBehaviour:
   pop: {fileID: 519420033}
   audioDelay: 0.1
   gameScore: 0
-  multiplier: 0
-  seriescount: 0
+  distScore: 1
   inverted: 0
 --- !u!4 &1964050253
 Transform:
