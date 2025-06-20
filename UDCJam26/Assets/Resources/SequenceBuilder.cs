@@ -13,7 +13,7 @@ public class SequenceBuilder : MonoBehaviour {
 
 	[HideInInspector] public RhythmBlockType[] beats;
 
-	public void OnValidate() {
+	/*public void OnValidate() {
 		if(numBars * subdivisions > beats.Length || shortenList) {
 			RhythmBlockType[] arr = new RhythmBlockType[numBars * subdivisions];
 			for(int i = 0; i < Mathf.Min(beats.Length, arr.Length); i++) {
@@ -29,7 +29,7 @@ public class SequenceBuilder : MonoBehaviour {
 
 		numBars = beats.Length / subdivisions;
 		EditorUtility.SetDirty(this);
-	}
+	}*/
 }
 
 public enum RhythmBlockType {
@@ -38,7 +38,7 @@ public enum RhythmBlockType {
     NO_HIT
 }
 
-[CustomEditor(typeof(SequenceBuilder))]
+/*[CustomEditor(typeof(SequenceBuilder))]
 public class ListUpdaterEditor : Editor {
 	public override void OnInspectorGUI() {
 		DrawDefaultInspector();
@@ -82,4 +82,4 @@ public class ListUpdaterEditor : Editor {
 		//Rect rect = GUILayoutUtility.GetLastRect();
 		//EditorGUI.DrawRect(new Rect(rect.x, rect.y + rect.height, rect.width, 1), Color.black);
 	}
-}
+}*/
